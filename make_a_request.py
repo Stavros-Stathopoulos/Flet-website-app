@@ -52,9 +52,15 @@ in the course of introduction to the sciences of electrical and computer enginee
 '''
 
 
-def makeRequest(URL="https://ds.upatras.gr/index.php", fname=None, phone=None, email=None):
-    #name = tr.translate_text(fname)
-    name = fname
+# noinspection PyTypedDict
+def makeRequest(URL="https://ds.upatras.gr/index.php", fname=None, phone_input=None, email=None):
+    name = None
+    phone = None
+    if fname is not None:
+        name = tr.translate_text(fname)
+    elif phone_input is not None:
+        phone = tr.translate_phone(phone_input)
+
     response = {}  # the dictionary we will return
     if name is not None:
         # make the request using the requests.post() function and the name of the person
@@ -68,6 +74,7 @@ def makeRequest(URL="https://ds.upatras.gr/index.php", fname=None, phone=None, e
     else:
         # if none of the arguments were given return the dictionary with the results set to False
         response["results"] = False
+        response["error"] = "No arguments were given"
         return response
 
     if request.status_code == 200:
@@ -81,11 +88,32 @@ def makeRequest(URL="https://ds.upatras.gr/index.php", fname=None, phone=None, e
         if soup.find(string=re.compile("Δε βρέθηκαν εγγραφές.")):
             # return the dictionary with the results set to False
             response["results"] = False
+            response["error"] = "Δε βρέθηκαν εγγραφές."
 
             return response
-
+            # if the person was found then return the dictionary with the results set to True
+        # find the next html element we want to use BeautifulSoup.findNextSiblings()
         else:
             result = soup.find("form").findNextSiblings()
+            error = soup.find("form")
+            # if the result is "Με Ελληνικούς χαρακτήρες," then the request was not successful due to
+            # the fact that the person we searched was not found
+            if error.text[15:40] == "Με Ελληνικούς χαρακτήρες,":
+                response["results"] = False
+                response["error"] = "Με Ελληνικούς χαρακτήρες, παρακαλώ."
+                return response
+            # if the result is "Δώστε ένα έγκυρο email ή," then the request was not successful due to
+            # the fact that the email we searched was not found
+            elif error.text[26:50] == "Δώστε ένα έγκυρο email ή":
+                response["results"] = False
+                response["error"] = "Δώστε ένα έγκυρο email ή τηλέφωνο."
+                return response
+            # if the result is "Σε δεκαψήφια μορφή," then the request was not successful due to
+            # the fact that the phone number we searched was not found
+            elif error.text[40:58] == "Σε δεκαψήφια μορφή":
+                response["results"] = False
+                response["error"] = "Σε 2610XXXXXX μορφή, παρακαλώ."
+                return response
             # if the person was found then return the dictionary with the results set to True
             response["results"] = True
             # find the next html element we want to use BeautifulSoup.findNextSiblings()
@@ -99,14 +127,15 @@ def makeRequest(URL="https://ds.upatras.gr/index.php", fname=None, phone=None, e
             result = soup.find(string=re.compile("Τμήμα"))
             response["department"] = result
             # return the dictionary with the results
-
             return response
     else:
         # if the request was not successful return the dictionary with the results set to False
-        print("Request was not successful", request.status_code)
         response["results"] = False
+        response["error"] = request.status_code
         return response
 
 
 if __name__ == '__main__':
-    print(makeRequest(fname="csefw"))
+    while True:
+        name = input("Give me a name: ")
+        print(makeRequest(phone_input=name))

@@ -1,4 +1,4 @@
-'''
+"""
 Created by: S. Stathopoulos
 Date created: 17/05/2023
 this file is used by the main.py file
@@ -24,72 +24,71 @@ this file contains the following functions:
 these changes are necessary because the app is going to make a request to the University of Patras' website
 which is: https://ds.upatras.gr/index.php and it only accepts the search keys in specific formats
 This app was made for ths Electrical and Computer Engineering Department of the University of Patras
-in the course of introduction to the siences of electrical and computer engineering
+in the course of introduction to the sciences of electrical and computer engineering
 
-'''
-#function to convert Greeklish to Greek
+"""
+
+
+# function to convert Greeklish to Greek
 def translate_text(text):
-    #dictionary with the Greek letters and their corresponding Greeklish letters
+    # dictionary with the Greek letters and their corresponding Greeklish letters
     double = False
     first = True
     letters = {
-    "a":"α",
-    "b":"β",
-    "g":"γ",
-    "d":"δ",
-    "e":"ε",
-    "z":"ζ",
-    "h":"η",
-    "th":"θ",
-    "i":"ι",
-    "k":"κ",
-    "l":"λ",
-    "m":"μ",
-    "n":"ν",
-    "ks":"ξ",
-    "o":"ο",
-    "p":"π",
-    "r":"ρ",
-    "s":"σ",
-    "t":"τ",
-    "u":"υ",
-    "f":"φ",
-    "x":"χ",
-    "ps":"ψ",
-    "w":"ω",
-    " ":" ",
-    "c":"κ",
-    "v":"β"
-}
+        "a": "α",
+        "b": "β",
+        "g": "γ",
+        "d": "δ",
+        "e": "ε",
+        "z": "ζ",
+        "h": "η",
+        "th": "θ",
+        "i": "ι",
+        "k": "κ",
+        "l": "λ",
+        "m": "μ",
+        "n": "ν",
+        "ks": "ξ",
+        "o": "ο",
+        "p": "π",
+        "r": "ρ",
+        "s": "σ",
+        "t": "τ",
+        "u": "υ",
+        "f": "φ",
+        "x": "χ",
+        "ps": "ψ",
+        "w": "ω",
+        " ": " ",
+        "c": "κ",
+        "v": "β",
+        "j": "ζ",
+        "q": "κ",
+        "y": "ι"
+    }
     traslation = ""
-    #convert the text to lowercase
+    # convert the text to lowercase
     text = text.lower()
     for i in range(len(text)):
-        
-        if double == True:
+
+        if double:
             double = False
             continue
-        #check if the letter is in the a Greek letter
+        # check if the letter is in the Greek letter
         if text[i] in letters.values():
-            #add the Greek letter to the traslation
-            if first == True:
-                tranlation = tranlation + letters[text[i]].upper()
-                first = False
-            else:
-                traslation += letters[text[i]]
-        #if the letter is not in the Greek letters add it to the traslation
+            return greekText(text)
         else:
-            #check if the letter is a double letter like th, ks, ps
-            if text[i] == "t" and text[i+1] == "h":
-                if first == True:
+            # check if the letter is a double letter like th, ks, ps
+            if text[i] == "t" and text[i + 1] == "h":
+                if first:
                     traslation += "Θ"
                     first = False
                 else:
                     traslation += "θ"
                 double = True
                 continue
-            elif text[i] == "k" and text[i+1] == "s":
-                if first == True:
+            elif text[i] == "k" and text[i + 1] == "s":
+                if first:
                     traslation += "Ξ"
                     first = False
                 else:
@@ -97,52 +96,71 @@ def translate_text(text):
                 double = True
                 i += 1
                 continue
-            elif text[i] == "p" and text[i+1] == "s":
-                if first == True:
+            elif text[i] == "p" and text[i + 1] == "s":
+                if first:
                     traslation += "Ψ"
                     first = False
-                else:    
+                else:
                     traslation += "ψ"
                 double = True
                 i += 1
                 continue
-            #if the letter is not a double letter translate it
+            # if the letter is not a double letter translate it
             else:
-                if first == True:
+                if first:
                     traslation += letters[text[i]].upper()
                     first = False
                 else:
                     traslation += letters[text[i]]
     return traslation
-    
 
-#function to convert the phone number to the correct format
+
+# function to handle the case where the user enters the name in Greek
+def greekText(text):
+    result = ""
+    if text[0].isupper():
+        return text
+    else:
+        for i in range(len(text)):
+            if i == 0:
+                result += text[i].upper()
+            else:
+                result += text[i]
+    return result
+
+
+# function to convert the phone number to the correct format
 def translate_phone(phone):
     telephone = ""
-    #remove the country code if it exists and its in +30 format
-    if (phone[0:3] == "+30"):
-        #check if the area code exists
-        if(phone[3:7] == "2610"):
+    # remove the country code if it exists and its in +30 format
+    if phone[0:3] == "+30":
+        # check if the area code exists
+        if phone[3:7] == "2610":
             telephone = phone[3:]
-        #if the area code doesn't exist add it
+        # if the area code doesn't exist add it
         else:
             telephone = "2610" + phone[3:]
-    #remove the country code if it exists and its in 0030 format
-    elif (phone[0:4] == "0030"):
-        #check if the area code exists
-        if( phone[4:8] == "2610"):
+    # remove the country code if it exists and its in 0030 format
+    elif phone[0:4] == "0030":
+        # check if the area code exists
+        if phone[4:8] == "2610":
             telephone = phone[4:]
-        #if the area code doesn't exist add it
+        # if the area code doesn't exist add it
         else:
             telephone = "2610" + phone[4:]
-    #handle the case where the user enters the phone number in the correct format
-    elif(phone[0:4] == "2610"):
+    # handle the case where the user enters the phone number in the correct format
+    elif phone[0:4] == "2610":
         telephone = phone
-    #handle the case where the user enters the phone number without the area code
+    # handle the case where the user enters the phone number without the area code
     else:
         telephone = "2610" + phone
     return telephone
 
+
 if __name__ == "__main__":
-    print(translate_text("can"))
-    print(translate_phone("996464"))
+    while True:
+        try:
+            text = input("Enter text: ")
+            print(translate_text(text))
+        except Exception as e:
+            print(e)
