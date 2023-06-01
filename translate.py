@@ -1,30 +1,35 @@
 """
-Created by: S. Stathopoulos
-Date created: 17/05/2023
-this file is used by the main.py file
-this file contains the following functions:
-    translate_text() to translate the text from Greeklish to Greek
-        this function is used to avoid any errors when the user enters the name in Greeklish
-        this function is able to handle the following formats:
-            Greeklish
-            Greek
-        the function returns the text in Greek format with the first letter of the text in uppercase
+    File: translate.py
+    Created by: Stavros Stathopoulos
+    Date: 17/05/2023
+    Version: 1.1
+    Place: Patras, Greece
+    description:
 
-    translate_phone() to translate the phone number to the correct format
-        the correct format is: 2610XXXXXX because the app was made for the University of Patras
-        and the area code in Patras, Greece is 2610
-        we remove the country code if it exists
-        we add the area code if it doesn't exist
-        this function is used to avoid any errors when the user enters the phone number in the wrong format
-        this function is able to handle the following formats:
-            2610XXXXXX
-            00302610XXXXXX
-            +302610XXXXXX
-            XXXXXXXX
-these changes are necessary because the app is going to make a request to the University of Patras' website
-which is: https://ds.upatras.gr/index.php and it only accepts the search keys in specific formats
-This app was made for ths Electrical and Computer Engineering Department of the University of Patras
-in the course of introduction to the sciences of electrical and computer engineering
+    this file is used by the mainX.X.py file
+    this file contains the following functions:
+        translate_text() to translate the text from Greeklish to Greek
+            this function is used to avoid any errors when the user enters the name in Greeklish
+            this function is able to handle the following formats:
+                Greeklish
+                Greek
+            the function returns the text in Greek format with the first letter of the text in uppercase
+
+        translate_phone() to translate the phone number to the correct format
+            the correct format is: 2610XXXXXX because the app was made for the University of Patras
+            and the area code in Patras, Greece is 2610
+            we remove the country code if it exists
+            we add the area code if it doesn't exist
+            this function is used to avoid any errors when the user enters the phone number in the wrong format
+            this function is able to handle the following formats:
+                2610XXXXXX
+                00302610XXXXXX
+                +302610XXXXXX
+                XXXXXXXX
+    these changes are necessary because the app is going to make a request to the University of Patras' website
+    which is: https://ds.upatras.gr/index.php and it only accepts the search keys in specific formats
+    This app was made for ths Electrical and Computer Engineering Department of the University of Patras
+    in the course of introduction to the sciences of electrical and computer engineering
 
 """
 

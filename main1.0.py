@@ -1,6 +1,103 @@
 import flet as ft
 import make_a_request as req
-
+'''
+    file: main1.0.py
+    created by: Stavros Stathopoulos
+    date: 01/06/2023
+    version: 1.0
+    place: Patras, Greece
+    description:
+    
+    This is the main file of the application.
+    It is responsible for the creation of the application's window and the creation of the application's controls.
+    The application's controls are created in the build() method.
+    The application's window is created in the main() method.
+    the file tools/make_a_request.py is responsible for the communication with the server.
+    there are three ways of communication with the server:
+        1. by name
+        2. by email
+        3. by phone number
+    the make_a_request file returns a dictionary file with the following structure:
+        {
+            "status": True/False,
+            "name": "name",
+            "email": "email",
+            "phone": "phone",
+            "department": "department"
+        }
+    if the status is True, then the server found a result.
+    if the status is False, then the server did not find a result.
+    the name, email, phone and department are the results of the search.
+    if the status is False, then the name, email, phone and department are empty.
+    the main1.0.py file is responsible for the creation of the application's window and the creation of the application's controls.
+    in the main1.0.py file there is a class called App.
+    the App class inherits from the UserControl class.
+    the UserControl class is a class that is responsible for the creation of the application's controls.
+    the UserControl class is located in the flet.py file.
+    the UserControl class is responsible for the creation of the application's controls.
+    when the app is running in desktop mode, the application's window has minimum width 850px and height 425px.
+    these are the minimum dimensions of the application's window,
+    because the application is designed to run on a mobile device.
+    but the application can run on a desktop device, with bigger screen, so the application's window can be adjusted.
+    
+    
+    the App class has the following methods:
+        __init__(self, controller):
+            this method is the constructor of the App class.
+            the constructor takes one argument, the controller.
+            the controller is the object that is responsible for the communication with the server.
+            the controller is an object of the Controller class.
+        
+        showMessage(self, e, message=""):
+            this method is responsible for the display of a message.    
+            the method takes two arguments:
+                e: the event that triggered the method
+                message: the message that will be displayed
+            the method returns nothing.
+            
+        showReply(self, e, reply):
+            this method is responsible for the display of the results of the search.
+            the method takes two arguments:
+                e: the event that triggered the method
+                reply: the reply of the server
+            the method returns nothing.
+            
+        build(self):
+            this method is responsible for the creation of the application's controls.
+            the method takes no arguments.
+            the method returns a list of the application's controls.
+            
+        submit_handler(self, e):
+            this method is responsible for the submission of the search.
+            the method takes one argument:
+                e: the event that triggered the method
+            the method returns nothing.
+        
+        theme_change(self, e):
+            this method is responsible for the change of the application's theme.
+            the method takes one argument:
+                e: the event that triggered the method
+            the method returns nothing.
+            
+    the Controller class has the following methods:
+        __init__(self):
+            this method is the constructor of the Controller class.
+            the constructor takes no arguments.
+            
+        startApp(self):
+            this method is responsible for the start of the application.
+            the method takes no arguments.
+            the method returns nothing.
+            
+    
+    def main():
+        this function is responsible for the creation of the application's window.
+        the function takes no arguments.
+        the function returns nothing.
+        
+    
+    
+'''
 
 class App(ft.UserControl):
     def __init__(self, controller):
@@ -68,7 +165,7 @@ class App(ft.UserControl):
         self.controls = []
         menu = ft.PopupMenuButton(icon=ft.icons.HOME,
                                   items=[
-                                      
+
                                       ft.PopupMenuItem(
                                           text="Πανεπιστήμιο Πατρών",
                                           on_click=lambda e: self.page.launch_url(

@@ -9,6 +9,7 @@ import translate as tr
     date: 17/05/2023
     version: 1.1
     place: Patras, Greece
+    description:
 
     this function makes a request to the website of the Patras University
     and returns a dictionary with the results of the request
@@ -138,4 +139,4 @@ def makeRequest(URL="https://ds.upatras.gr/index.php", fname=None, phone_input=N
 if __name__ == '__main__':
     while True:
         name = input("Give me a name: ")
-        print(makeRequest(phone_input=name))
+        print(makeRequest(fname=name))
