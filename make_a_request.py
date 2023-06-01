@@ -7,7 +7,7 @@ import translate as tr
     file: make_a_request.py
     writen by: S. Stathopoulos
     date: 17/05/2023
-    version: 1.0
+    version: 1.1
     place: Patras, Greece
 
     this function makes a request to the website of the Patras University

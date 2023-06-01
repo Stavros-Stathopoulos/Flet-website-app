@@ -7,8 +7,9 @@ def main(page: ft.Page):
         return ft.TextField(label=label,
                             width=300,
                             height=50,
-                            hint_text=hint_text,
-                            on_submit=on_submit)
+                            #hint_text=hint_text,
+                            on_submit=on_submit,
+                            border=ft.InputBorder.UNDERLINE)
 
     def createButton(icon, on_click, data):
         return ft.IconButton(icon=icon,
@@ -189,6 +190,18 @@ def main(page: ft.Page):
 
     page.on_resize = lambda e: page.update()
     page.add(
+        ft.Column(
+            [
+                ft.Container(
+                    margin=10,
+                    padding=15,
+                    alignment=ft.alignment.center,
+                    width=page.width / 3,
+                    height=50,
+                    border_radius=0
+                )
+            ]
+        ),
         ft.ResponsiveRow(
             [
                 start_row
@@ -196,7 +209,9 @@ def main(page: ft.Page):
         ),
         ft.ResponsiveRow(
             [
-                first_row
+                nameBox,
+                searchButtonName,
+
             ],
             run_spacing={"xs": 10},
         ),
