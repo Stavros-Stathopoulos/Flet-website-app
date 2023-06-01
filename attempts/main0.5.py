@@ -124,14 +124,6 @@ class App(ft.UserControl):
         self.dark_mode = None
         self.controller = controller
 
-    def start_header(self, e):
-        if self.page.controls:
-            self.page.controls.pop()
-        self.page.add(PageHeader(self))
-
-    def startResponse(self):
-        self.controller.startResponse()
-
     def show_message(self, e, message=""):
         self.message.value = message
         self.message.color = "red"
@@ -202,13 +194,15 @@ class App(ft.UserControl):
                                                                 on_click=self.submit_handler)],
                                     alignment=ft.MainAxisAlignment.SPACE_EVENLY))
 
-        return ft.Column(self.controls)  # , self.message)
+        return ft.Column(self.controls)
 
 
 class Controller:
     def __init__(self, page):
         self.device = None
         self.page = page
+        self.response = {}
+        self.searchKey = {}
         self.start_app(None)
 
     def start_app(self, e):
@@ -217,11 +211,10 @@ class Controller:
         self.page.add(PageHeader(self))
         self.page.add(App(self))
 
-    def startResponse(self):
-        if self.page.controls:
-            self.page.controls.pop()
+    def driver_func(self, e):
         self.page.add(PageHeader(self))
-        self.page.add(Requests(self))
+        self.page.add(App(self))
+
 
     def restart(self, e):
         if self.page.controls:

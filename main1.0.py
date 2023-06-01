@@ -2,11 +2,55 @@ import flet as ft
 import make_a_request as req
 
 
-class PageHeader(ft.UserControl):
+class App(ft.UserControl):
     def __init__(self, controller):
-        super().__init__()
-        self.dark_mode = None
+        super().__init__(self)
+        self.reply = {"status": False}
         self.controller = controller
+
+    def showMessage(self, e, message=""):
+
+        self.message.value = message
+        self.message.color = "red"
+        self.message.update()
+        return
+
+    def showReply(self, e, reply):
+        if self.reply["results"] is True:
+            self.name_row.value = "Όνομα: " + self.reply["name"]
+            self.name_row.update()
+            self.email_row.value = "Email: " + self.reply["email"]
+            self.email_row.update()
+            self.phone_row.value = "Τηλέφωνο: " + self.reply["phone"]
+            self.phone_row.update()
+            self.department_row.value = "Τμήμα: " + self.reply["department"]
+            self.department_row.update()
+            self.update()
+        else:
+            self.showMessage(None, message="Δεν βρέθηκαν αποτελέσματα.")
+            self.update()
+        return
+
+    def submit_handler(self, e):
+        if self.name_input.value != "":
+            self.reply = req.makeRequest(fname=self.name_input.value)
+            self.name_input.value = ""
+            self.showReply(None, self.reply)
+            self.update()
+
+        elif self.email_input.value != "":
+            self.reply = req.makeRequest(email=self.email_input.value)
+            self.email_input.value = ""
+            self.showReply(None, self.reply)
+            self.update()
+        elif self.phone_input.value != "":
+            self.reply = req.makeRequest(phone_input=self.phone_input.value)
+            self.phone_input.value = ""
+            self.showReply(None, self.reply)
+            self.update()
+        else:
+            self.showMessage(None, message="Δεν δώσατε κάποιο όνομα, email ή τηλέφωνο.")
+            return
 
     def theme_change(self, e):
         self.page.theme_mode = (
@@ -14,12 +58,17 @@ class PageHeader(ft.UserControl):
         )
         self.dark_mode.icon = (ft.icons.MODE_NIGHT_OUTLINED if self.page.theme_mode == ft.ThemeMode.LIGHT else
                                ft.icons.WB_SUNNY_OUTLINED)
+        self.dark_mode.icon_color = ft.colors.BLACK if self.page.theme_mode == ft.ThemeMode.LIGHT else ft.colors.WHITE
         self.page.bgcolor = "#eeeeee" if self.page.theme_mode == ft.ThemeMode.LIGHT else "#222222"
+        self.dark_mode.update()
         self.page.update()
+        return
 
     def build(self):
+        self.controls = []
         menu = ft.PopupMenuButton(icon=ft.icons.HOME,
                                   items=[
+                                      
                                       ft.PopupMenuItem(
                                           text="Πανεπιστήμιο Πατρών",
                                           on_click=lambda e: self.page.launch_url(
@@ -35,11 +84,12 @@ class PageHeader(ft.UserControl):
                                       ft.PopupMenuItem(
                                           text="Επικοινωνία",
                                           on_click=lambda e: self.page.launch_url(
-                                              url="https://www.ece.upatras.gr/contact",
+                                              url="https://www.upatras.gr/contact",
                                               web_popup_window=False,
                                               web_window_name="_blank"))
                                   ])
         self.dark_mode = ft.IconButton(icon=ft.icons.MODE_NIGHT_OUTLINED,
+                                       icon_color=ft.colors.BLACK,
                                        on_click=self.theme_change)
         self.controls.append(ft.Container(content=ft.Row(
             controls=[
@@ -62,111 +112,6 @@ class PageHeader(ft.UserControl):
                                                       size=25, selectable=True)],
                                     alignment=ft.MainAxisAlignment.SPACE_EVENLY))
 
-        return ft.Column(self.controls)
-
-
-class Requests(ft.UserControl):
-    def __init__(self, controller, input_name=None, input_phone=None, input_email=None):
-        super().__init__()
-        self.email = None
-        self.phone = None
-        self.name = None
-        self.result = None
-        self.controller = controller
-        self.start()
-        self.request(input_name=input_name, input_phone=input_phone, input_email=input_email)
-
-    def start(self):
-        self.controller.start_header(None)
-        self.controller.startResponse()
-
-    def request(self, input_name=None, input_phone=None, input_email=None):
-        if input_name is not None:
-            self.name = input_name
-            self.result = req.makeRequest(fname=self.name)
-        elif input_phone is not None:
-            self.phone = input_phone
-            self.result = req.makeRequest(phone_input=self.phone)
-        elif input_email is not None:
-            self.email = input_email
-            self.result = req.makeRequest(email=self.email)
-        else:
-            return {"results": "False", "Error": "No input was given"}
-
-    def build(self):
-        self.controls = []
-
-        if self.result["results"] is True:
-            self.controls.append(ft.Row(controls=[ft.Text(f"Όνομα: {self.result['name']}", size=30, selectable=True)],
-                                        alignment=ft.MainAxisAlignment.SPACE_EVENLY))
-            self.controls.append(
-                ft.Row(controls=[ft.Text(f"Τηλέφωνο: {self.result['phone']}", size=30, selectable=True)],
-                       alignment=ft.MainAxisAlignment.SPACE_EVENLY))
-            self.controls.append(ft.Row(controls=[ft.Text(f"Email: {self.result['email']}", size=30, selectable=True)],
-                                        alignment=ft.MainAxisAlignment.SPACE_EVENLY))
-            self.controls.append(
-                ft.Row(controls=[ft.Text(f"Τμήμα: {self.result['department']}", size=30, selectable=True)],
-                       alignment=ft.MainAxisAlignment.SPACE_EVENLY))
-            '''self.controls.append(
-                ft.Row([ft.FilledButton("Νέα Αναζήτηση", on_click=self.controller.new_search)]))'''
-        else:
-            self.controls.append(ft.Text("Δε βρέθηκαν εγγραφές.", size=30, selectable=True))
-        return ft.Column(self.controls)
-
-
-class App(ft.UserControl):
-    def __init__(self, controller):
-        super().__init__(self)
-        self.email_input = None
-        self.message = None
-        self.phone_input = None
-        self.name_input = None
-        self.dark_mode = None
-        self.controller = controller
-
-    def start_header(self, e):
-        if self.page.controls:
-            self.page.controls.pop()
-        self.page.add(PageHeader(self))
-
-    def startResponse(self):
-        self.controller.startResponse()
-
-    def show_message(self, e, message=""):
-        self.message.value = message
-        self.message.color = "red"
-        self.update()
-        return
-
-    def submit_handler(self, e):
-        if self.page.controls:
-            self.page.controls.pop()
-        if self.name_input.value != "":
-            self.controls.append(ft.FilledButton("Αναζήτηση",
-                                                 on_click=self.page.add(Requests(self,
-                                                                                 input_name=self.name_input.value,
-                                                                                 input_phone=None,
-                                                                                 input_email=None))))
-        elif self.phone_input.value != "":
-            self.controls.append(ft.FilledButton("Αναζήτηση",
-                                                 on_click=self.page.add(Requests(self,
-                                                                                 input_phone=self.phone_input.value,
-                                                                                 input_email=None,
-                                                                                 input_name=None))))
-        elif self.email_input.value != "":
-            self.controls.append(ft.FilledButton("Αναζήτηση",
-                                                 on_click=self.page.add(Requests(self,
-                                                                                 input_email=self.email_input.value,
-                                                                                 input_name=None,
-                                                                                 input_phone=None))))
-        else:
-            self.show_message(None, message="Παρακαλώ εισάγετε το όνομα, το τηλέφωνο ή το email του υπαλλήλου που "
-                                            "αναζητείτε")
-            print("error")
-            return
-
-    def build(self):
-        self.controls = []
         self.controls.append(ft.Divider(color="black"))
         self.controls.append(
             ft.Row(controls=[ft.Text("Εισάγετε το όνομα, το τηλέφωνο ή το email το μέλος που αναζητείτε",
@@ -192,6 +137,7 @@ class App(ft.UserControl):
         self.controls.append(ft.Row(controls=[self.email_input], alignment=ft.MainAxisAlignment.SPACE_EVENLY))
         self.message = ft.Text("")
         self.controls.append(ft.Row(controls=[self.message], alignment=ft.MainAxisAlignment.SPACE_EVENLY))
+
         self.controls.append(ft.Row(controls=[ft.ElevatedButton(icon=ft.icons.SEARCH_SHARP,
                                                                 text="Αναζήτηση",
                                                                 width=200,
@@ -202,34 +148,29 @@ class App(ft.UserControl):
                                                                 on_click=self.submit_handler)],
                                     alignment=ft.MainAxisAlignment.SPACE_EVENLY))
 
-        return ft.Column(self.controls)  # , self.message)
+        self.controls.append(ft.Divider(color="black"))
+        self.name_row = ft.Text("", size=20, selectable=True)
+        self.phone_row = ft.Text("", size=20, selectable=True)
+        self.email_row = ft.Text("", size=20, selectable=True)
+        self.department_row = ft.Text("", size=20, selectable=True)
+
+        self.controls.append(ft.Row(controls=[self.name_row], alignment=ft.MainAxisAlignment.SPACE_EVENLY))
+        self.controls.append(ft.Row(controls=[self.phone_row], alignment=ft.MainAxisAlignment.SPACE_EVENLY))
+        self.controls.append(ft.Row(controls=[self.email_row], alignment=ft.MainAxisAlignment.SPACE_EVENLY))
+        self.controls.append(ft.Row(controls=[self.department_row], alignment=ft.MainAxisAlignment.SPACE_EVENLY))
+
+        return ft.Column(self.controls)
 
 
 class Controller:
     def __init__(self, page):
-        self.device = None
         self.page = page
-        self.start_app(None)
+        self.startApp()
 
-    def start_app(self, e):
+    def startApp(self):
         if self.page.controls:
-            self.page.controls.pop()
-        self.page.add(PageHeader(self))
+            self.page.controls.clear()
         self.page.add(App(self))
-
-    def startResponse(self):
-        if self.page.controls:
-            self.page.controls.pop()
-        self.page.add(PageHeader(self))
-        self.page.add(Requests(self))
-
-    def restart(self, e):
-        if self.page.controls:
-            self.page.controls.pop()
-        self.start_app(None)
-
-    def new_search(self, e):
-        self.restart(None)
 
 
 def main(page: ft.Page):
