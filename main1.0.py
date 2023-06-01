@@ -114,13 +114,25 @@ class App(ft.UserControl):
 
     def showReply(self, e, reply):
         if self.reply["results"] is True:
-            self.name_row.value = "Όνομα: " + self.reply["name"]
+            self.name_row.value = self.reply["name"]
+            self.name_row.label = "Όνομα: "
+            self.name_row.border = ft.InputBorder.UNDERLINE
+            self.name_row.icon = ft.icons.PERSON_SHARP
             self.name_row.update()
-            self.email_row.value = "Email: " + self.reply["email"]
+            self.email_row.value =self.reply["email"]
+            self.email_row.label = "Email: "
+            self.email_row.border = ft.InputBorder.UNDERLINE
+            self.email_row.icon = ft.icons.EMAIL_SHARP
             self.email_row.update()
-            self.phone_row.value = "Τηλέφωνο: " + self.reply["phone"]
+            self.phone_row.value =self.reply["phone"]
+            self.phone_row.label = "Τηλέφωνο: "
+            self.phone_row.border = ft.InputBorder.UNDERLINE
+            self.phone_row.icon = ft.icons.PHONE_SHARP
             self.phone_row.update()
-            self.department_row.value = "Τμήμα: " + self.reply["department"]
+            self.department_row.value = self.reply["department"]
+            self.department_row.label = "Τμήμα: "
+            self.department_row.border = ft.InputBorder.UNDERLINE
+            self.department_row.icon = ft.icons.SCHOOL_SHARP
             self.department_row.update()
             self.update()
         else:
@@ -217,18 +229,21 @@ class App(ft.UserControl):
         self.name_input = ft.TextField(label="Όνομα",
                                        width=300,
                                        height=80,
+                                       icon=ft.icons.PERSON_SHARP,
                                        border=ft.InputBorder.UNDERLINE,
                                        on_submit=self.submit_handler)
         self.controls.append(ft.Row(controls=[self.name_input], alignment=ft.MainAxisAlignment.SPACE_EVENLY))
         self.phone_input = ft.TextField(label="Τηλέφωνο",
                                         width=300,
                                         height=70,
+                                        icon=ft.icons.PHONE_SHARP,
                                         border=ft.InputBorder.UNDERLINE,
                                         on_submit=self.submit_handler)
         self.controls.append(ft.Row(controls=[self.phone_input], alignment=ft.MainAxisAlignment.SPACE_EVENLY))
         self.email_input = ft.TextField(label="Email",
                                         width=300,
                                         height=70,
+                                        icon=ft.icons.MAIL_SHARP,
                                         border=ft.InputBorder.UNDERLINE,
                                         on_submit=self.submit_handler)
         self.controls.append(ft.Row(controls=[self.email_input], alignment=ft.MainAxisAlignment.SPACE_EVENLY))
@@ -246,10 +261,10 @@ class App(ft.UserControl):
                                     alignment=ft.MainAxisAlignment.SPACE_EVENLY))
 
         self.controls.append(ft.Divider(color="black"))
-        self.name_row = ft.Text("", size=20, selectable=True)
-        self.phone_row = ft.Text("", size=20, selectable=True)
-        self.email_row = ft.Text("", size=20, selectable=True)
-        self.department_row = ft.Text("", size=20, selectable=True)
+        self.name_row = ft.TextField(label="", border=ft.InputBorder.NONE, read_only=True)
+        self.phone_row = ft.TextField(label="", border=ft.InputBorder.NONE, read_only=True)
+        self.email_row = ft.TextField(label="", border=ft.InputBorder.NONE, read_only=True)
+        self.department_row = ft.TextField(label="", border=ft.InputBorder.NONE, read_only=True, multiline=True)
 
         self.controls.append(ft.Row(controls=[self.name_row], alignment=ft.MainAxisAlignment.SPACE_EVENLY))
         self.controls.append(ft.Row(controls=[self.phone_row], alignment=ft.MainAxisAlignment.SPACE_EVENLY))
