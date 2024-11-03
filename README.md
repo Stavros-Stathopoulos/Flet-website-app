@@ -1,105 +1,70 @@
-#Flet-website-app
-================
+# Flet University Directory Search App
 
-##General info
-==============
+## General Info
 
-    This is a web application that searches for the contact information
-    of a person member of the Patras University. The application is
-    written in Python 3.10 and uses the Flet framework.
+This is a web application that searches for the contact information of a person affiliated with Patras University. The application is written in Python 3.10 using the Flet framework by Google.
 
-    the application is available on GitHub:
-    https://github.com/Stavros-Stathopoulos/Flet-website-app
+The project is available on GitHub: [Flet-website-app](https://github.com/Stavros-Stathopoulos/Flet-website-app)
 
+## Table of Contents
 
-##Table of contents
-================
-    * [General info](#general-info)
-    * [Technologies](#technologies)
-    * [Installation](#installation)
-    * [Requirements](#requirements)
-    * [Editor](#editor)
-    * [FAQ](#faq)
+- [General Info](#general-info)
+- [Technologies](#technologies)
+- [Installation](#installation)
+- [Requirements](#requirements)
+- [Editor](#editor)
+- [FAQ](#faq)
 
 ## Technologies
-================
 
-    the application is written in Python 3.10 and uses the Flet framework
-    witch is a framework for web applications written by Google.
+This application is built with Python 3.10 and the [Flet framework](https://flet.dev), a library by Google for creating web applications.
 
 ## Installation
-================
 
-    1) Clone the repository
-    2) Create a virtual environment or use the one provided
-    3) Install the requirements.txt file witch contains all the libraries needed
-    4) Run the application using the main.py file
+1. Clone the repository.
+2. Create a virtual environment or use the one provided.
+3. Install the dependencies from `requirements.txt`:
+   pip install -r requirements.txt
+4. Run the application using main.py.
 
 ## Requirements
-================
+All required modules are listed in requirements.txt. To install them, use:
 
-    All the required modules are in the requirements.txt file
-    you can install them using the command:
-        `pip install -r requirements.txt`
-
-    The application uses the Flet framework witch can be found here:
-    https://flet.dev
+pip install -r requirements.txt
+The application uses the Flet framework. You can learn more about it here.
 
 ## Editor
-================
-    The application was written by Stavros Stathopoulos
-    and the code is open source. You can find the code here:
-    https://github.com/Stavros-Stathopoulos/Flet-website-app
+The application was created by Stavros Stathopoulos and is open-source. The code can be found on GitHub: Flet-website-app.
 
-    The application was written using the PyCharm IDE
-    witch can be found here:
-    https://www.jetbrains.com/pycharm/
+Development was done using the PyCharm IDE.
 
+## FAQ
+Q: What is the Flet framework?
+A: Flet is a web application framework created by Google, designed for building interactive web apps with Python.
 
-##FAQ
-=================
+Q: Why use the Flet framework?
+A: Flet is straightforward and user-friendly, making it an ideal choice for quickly building web applications. Additionally, it was part of an assignment for the Introduction to ECE Science course.
 
-    **Q:** What is the Flet framework?
-    **A:** Flet is a framework for web applications written by Google.
+Q: What is the purpose of this application?
+A: This app allows users to search for contact information of people affiliated with Patras University.
 
-    **Q** Why did you use the Flet framework?
-    **A:** I used the Flet framework because it is a very simple framework to create
-    web applications, and it is very easy to use. Also, it was an assignment for the
-    course of Introduction to the ECE Science.
+Q: How do I use this application?
+A: Run the main.py file and enter the name, phone number, or email of the person you want to find.
 
-    **Q:** What is the purpose of this application?
-    **A:** The purpose of this application is to search for the contact information
-    of a person member of the Patras University.
+Q: What is the purpose of requirements.txt?
+A: requirements.txt lists all libraries needed to run the application. Install them by running:
 
-    **Q:** How can I use this application?
-    **A:** You can use this application by running the main.py file and then
-    typing the name of the person you want to search for. Also, you can use the
-    phone number or the email of the person you want to search for.
+bash
+Copy code
+pip install -r requirements.txt
+Q: Why use a virtual environment?
+A: A virtual environment isolates the application's dependencies, preventing conflicts with other projects and ensuring version compatibility. It’s a best practice for any Python development.
 
-    **Q:** What is the purpose of the requirements.txt file?
-    **A:** The requirements.txt file contains all the libraries needed for the
-    application to run. You can install them using the command:
-        `pip install -r requirements.txt`
+Q: What is the purpose of the attempts directory?
+A: The attempts directory contains different iterations of the application, allowing for a record of the development process and progress over time.
 
-    **Q:** What is the purpose of the virtual environment?
-    **A:** The virtual environment is used to isolate the application from the
-    rest of the system. This way, the application can run without any problems
-    and without any conflicts with other applications. Also, it is a good practice
-    to use a virtual environment when developing an application, because you avoid
-    any problems that may occur when installing wrong versions of libraries, or the
-    python itself.
+Q: What is the purpose of the assets directory?
+A: The assets directory holds images and other resources necessary for the application.
 
-    **Q** What is the purpose of the attempts directory?
-    **A:** The attempts directory contains all the attempts I made to create the
-    application. Also, it contains tha versions of the application prior to the
-    final version. In this way its possible to see the progress of the application.
-
-    **Q** What is the purpose of the assets directory?
-    **A:** The assets directory contains all the images and the files needed for
-    the application to run.
-
-    **Q** What is the purpose of the Request templates directory?
-    **A:** The Request templates directory contains all the HTML files that the server
-    returns to the client. These files were used as an example to find the correct
-    parts of the HTML file that contain the information we want to extract, through
-    the scraping process.
+Q: What is the purpose of the Request templates directory?
+A: This directory contains HTML templates used to guide the web scraping process, helping identify the required information on a page.
