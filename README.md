@@ -51,11 +51,9 @@ A: This app allows users to search for contact information of people affiliated 
 Q: How do I use this application?
 A: Run the main.py file and enter the name, phone number, or email of the person you want to find.
 
-Q: What is the purpose of requirements.txt?
+*Q*: What is the purpose of requirements.txt?
 A: requirements.txt lists all libraries needed to run the application. Install them by running:
 
-bash
-Copy code
 pip install -r requirements.txt
 Q: Why use a virtual environment?
 A: A virtual environment isolates the application's dependencies, preventing conflicts with other projects and ensuring version compatibility. It’s a best practice for any Python development.
